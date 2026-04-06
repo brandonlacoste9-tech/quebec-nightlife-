@@ -232,13 +232,13 @@ body::after {
 /* City grid */
 .city-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.1rem;
 }
 
 .city-card {
   display: block;
-  padding: 1.35rem 1.4rem;
+  padding: 0;
   background: var(--bg-card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -247,6 +247,31 @@ body::after {
   transition: transform 0.35s var(--ease), border-color 0.25s, box-shadow 0.35s;
   position: relative;
   overflow: hidden;
+}
+
+.city-card-body {
+  padding: 1.35rem 1.4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.city-card-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--bg-elevated);
+}
+
+.city-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s var(--ease);
+}
+
+.city-card:hover .city-card-media img {
+  transform: scale(1.04);
 }
 
 .city-card::after {
@@ -269,7 +294,7 @@ body::after {
   opacity: 1;
 }
 
-.city-card h2 {
+.city-card-body h2 {
   font-family: var(--font-display);
   font-size: 1.35rem;
   font-weight: 600;
@@ -277,7 +302,7 @@ body::after {
   letter-spacing: -0.02em;
 }
 
-.city-card .region {
+.city-card-body .region {
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -285,14 +310,14 @@ body::after {
   margin-bottom: 0.5rem;
 }
 
-.city-card .blurb {
+.city-card-body .blurb {
   font-size: 0.92rem;
   color: var(--text-muted);
   margin: 0;
   line-height: 1.45;
 }
 
-.city-card .arrow {
+.city-card-body .arrow {
   margin-top: 1rem;
   font-size: 0.85rem;
   font-weight: 600;
@@ -322,8 +347,117 @@ body::after {
   margin: 0 0.4rem;
 }
 
+/* Hero image (city page) */
+.city-hero-media {
+  margin: 0 0 1.5rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-elevated);
+}
+
+.city-hero-media img {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  display: block;
+  max-height: min(52vh, 420px);
+}
+
+.photo-credit {
+  margin: 0;
+  padding: 0.65rem 1rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  background: rgba(7, 6, 10, 0.85);
+  border-top: 1px solid var(--line);
+}
+
+.photo-credit a {
+  color: var(--accent);
+}
+
+.section-lead {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: -0.35rem 0 1.25rem;
+  max-width: 65ch;
+  line-height: 1.5;
+}
+
+.location-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .location-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.location-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.location-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.location-kind {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin: 0;
+}
+
+.location-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.location-map {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.location-map:hover {
+  text-decoration: underline;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .city-hero {
-  padding: 2rem 0 2.5rem;
+  padding: 0 0 2.5rem;
 }
 
 .city-hero .region {
@@ -426,6 +560,16 @@ body::after {
   font-size: 0.85rem;
   color: var(--text-muted);
   text-align: center;
+}
+
+.site-footer .footer-credit {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.site-footer .footer-credit a {
+  color: var(--accent);
 }
 
 .empty-state {

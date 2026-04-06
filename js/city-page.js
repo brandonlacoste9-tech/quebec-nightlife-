@@ -48,6 +48,48 @@
     <span>${escapeHtml(city.name)}</span>
   `;
 
+  const media = window.ONTARIO_MEDIA;
+  const heroSrc = media ? media.cityImageUrl(city.slug, 1600) : "";
+  const locations = media ? media.locationsForCity(city) : [];
+
+  const locationsHtml =
+    locations.length && media
+      ? `
+    <section class="section-block" aria-labelledby="locations-heading">
+      <h2 id="locations-heading">Where to explore</h2>
+      <p class="section-lead">Named districts and strips — open the map to browse the area (not individual venue listings).</p>
+      <div class="location-grid">
+        ${locations
+          .map(
+            (loc) => `
+        <article class="location-card">
+          <h3>${escapeHtml(loc.name)}</h3>
+          <p class="location-kind">${escapeHtml(loc.kind)}</p>
+          <p class="location-desc">${escapeHtml(loc.desc)}</p>
+          <a class="location-map" href="${escapeHtml(media.mapsSearchUrl(loc.mapsQuery))}" target="_blank" rel="noopener noreferrer">Open in Google Maps<span class="sr-only"> (opens new tab)</span></a>
+        </article>`
+          )
+          .join("")}
+      </div>
+    </section>`
+      : "";
+
+  const heroMediaHtml =
+    heroSrc && media
+      ? `
+    <figure class="city-hero-media">
+      <img
+        src="${escapeHtml(heroSrc)}"
+        alt="${escapeHtml(city.name + " nightlife — illustrative stock image, not a specific venue")}"
+        width="1600"
+        height="857"
+        loading="eager"
+        decoding="async"
+      />
+      <figcaption class="photo-credit">${media.photoCreditHtml}</figcaption>
+    </figure>`
+      : "";
+
   const categoriesHtml = (city.categories || [])
     .map(
       (cat) => `
@@ -64,11 +106,14 @@
       : "";
 
   main.innerHTML = `
+    ${heroMediaHtml}
     <header class="city-hero">
       <p class="region">${escapeHtml(city.region)}</p>
       <h1>${escapeHtml(city.name)}</h1>
       <p class="intro">${escapeHtml(city.intro)}</p>
     </header>
+
+    ${locationsHtml}
 
     <section class="section-block" aria-labelledby="scene-heading">
       <h2 id="scene-heading">What you’ll find</h2>
@@ -86,8 +131,8 @@
 
     <p class="disclaimer">
       <strong>Note:</strong> This page describes typical nightlife categories and how they tend to show up in
-      ${escapeHtml(city.name)}. It is not a list of venues or endorsements. Hours, licences, and cover charges
-      change — check with individual businesses before you go.
+      ${escapeHtml(city.name)}. Map links search a district or area — not endorsements of specific businesses.
+      Photos are stock images, not venue photos. Hours, licences, and cover charges change — confirm before you go.
     </p>
   `;
 })();

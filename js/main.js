@@ -1,5 +1,6 @@
 (function () {
   const cities = window.ONTARIO_CITIES || [];
+  const media = window.ONTARIO_MEDIA;
   const grid = document.getElementById("city-grid");
   const search = document.getElementById("city-search");
   const regionWrap = document.getElementById("region-filters");
@@ -41,11 +42,17 @@
       const a = document.createElement("a");
       a.className = "city-card";
       a.href = `city.html?city=${encodeURIComponent(city.slug)}`;
+      const thumb =
+        media &&
+        `<div class="city-card-media"><img src="${escapeHtml(media.cityImageUrl(city.slug, 640))}" alt="" width="640" height="360" loading="lazy" decoding="async" /></div>`;
       a.innerHTML = `
-        <p class="region">${escapeHtml(city.region)}</p>
-        <h2>${escapeHtml(city.name)}</h2>
-        <p class="blurb">${escapeHtml(city.blurb)}</p>
-        <span class="arrow">View guide →</span>
+        ${thumb || ""}
+        <div class="city-card-body">
+          <p class="region">${escapeHtml(city.region)}</p>
+          <h2>${escapeHtml(city.name)}</h2>
+          <p class="blurb">${escapeHtml(city.blurb)}</p>
+          <span class="arrow">View guide →</span>
+        </div>
       `;
       frag.appendChild(a);
     }
